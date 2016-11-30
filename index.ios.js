@@ -18,7 +18,7 @@ export default class scrollPan extends Component {
   constructor(props){
     super(props);
     this.wrapperPanResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (e, g) => false,
+      onStartShouldSetPanResponder: (e, g) => true,
       onPanResponderGrant: () => {
         console.log('GRANTED TO WRAPPER');
       },
@@ -40,7 +40,7 @@ export default class scrollPan extends Component {
   render() {
     return (
       <View style={styles.container} {...this.wrapperPanResponder.panHandlers}>
-        <ScrollView onScroll={console.log('scrolled')} style={styles.scroll_view} {...this.scollerPanResponder.panHandlers}>
+        <ScrollView onScroll={() => console.log('scrolled')} style={styles.scroll_view} {...this.scollerPanResponder.panHandlers}>
           <Text style={{fontSize:96}}>Scroll this</Text>
           <Text style={{fontSize:96}}>Scroll this</Text>
           <Text style={{fontSize:96}}>Scroll this</Text>
