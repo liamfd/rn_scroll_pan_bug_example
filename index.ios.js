@@ -39,7 +39,8 @@ export default class scrollPan extends Component {
   }
   render() {
     return (
-      <View style={styles.container} {...this.wrapperPanResponder.panHandlers}>
+      <View style={styles.container}>
+        <View style={styles.pan_container} {...this.wrapperPanResponder.panHandlers} />
         <ScrollView onScroll={() => console.log('scrolled')} style={styles.scroll_view} {...this.scollerPanResponder.panHandlers}>
           <Text style={{fontSize:96}}>Scroll this</Text>
           <Text style={{fontSize:96}}>Scroll this</Text>
@@ -58,6 +59,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  pan_container: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'blue'
   },
   scroll_view: {
     backgroundColor: 'teal',
