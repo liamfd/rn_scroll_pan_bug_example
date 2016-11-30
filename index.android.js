@@ -9,23 +9,45 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView,
+  PanResponder
 } from 'react-native';
 
 export default class scrollPan extends Component {
+  constructor(props){
+    super(props);
+    this.wrapperPanResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (e, g) => true,
+      onPanResponderGrant: () => {
+        console.log('GRANTED TO WRAPPER');
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        console.log('WRAPPER MOVED');
+      }
+    });
+
+    this.scollerPanResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (e, g) => true,
+      onPanResponderGrant: () => {
+        console.log('GRANTED TO SCROLLER');
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        console.log('SCROLLER MOVED');
+      }
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <View style={styles.pan_container} {...this.wrapperPanResponder.panHandlers} />
+        <ScrollView onScroll={() => console.log('scrolled')} style={styles.scroll_view} {...this.scollerPanResponder.panHandlers}>
+          <Text style={{fontSize:96}}>Scroll this</Text>
+          <Text style={{fontSize:96}}>Scroll this</Text>
+          <Text style={{fontSize:96}}>Scroll this</Text>
+          <Text style={{fontSize:96}}>Scroll this</Text>
+          <Text style={{fontSize:96}}>Scroll this</Text>
+        </ScrollView>
       </View>
     );
   }
@@ -38,16 +60,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  pan_container: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'blue'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  scroll_view: {
+    backgroundColor: 'teal',
+    maxHeight: 350
+  }
 });
 
 AppRegistry.registerComponent('scrollPan', () => scrollPan);
